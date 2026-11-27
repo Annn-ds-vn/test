@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phương Thành An - Công Ty Xây Dựng</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ========== RESET & BASE ========== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            line-height: 1.7;
+            overflow-x: hidden;
+            background: #fff;
+        }
+
+        /* ========== CUSTOM PROPERTIES ========== */
+        :root {
+            --primary: #1a3a5c;
+            --primary-light: #2a5a8c;
+            --secondary: #ffffff;
+            --accent-blue: #3a7cc2;
+            --dark: #0d1b2a;
+            --gray-light: #f4f6f8;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ========== UTILITY ========== */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 100px 0; }
+        .text-center { text-align: center; }
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--white), #e8eef5);
+            color: var(--primary);
+            box-shadow: 0 4px 20px rgba(26,58,92,0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(26,58,92,0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+        .section-header {
+            margin-bottom: 60px;
+        }
+        .section-header .label {
+            display: inline-block;
+            color: var(--primary-light);
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .section-header .label::before,
+        .section-header .label::after {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 2px;
+            background: var(--primary-light);
+            vertical-align: middle;
+            margin: 0 12px;
+        }
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 15px auto 0;
+        }
+
+        /* ========== PRELOADER ========== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+        #preloader.hidden { opacity: 0; pointer-events: none; }
+        .loader {
+            width: 60px; height: 60px;
+            border: 4px solid rgba(42,90,140,0.2);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+        .navbar.scrolled {
+            background: rgba(13, 27, 42, 0.97);
+            padding: 8px 0;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .nav-brand img {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.5);
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .navbar.scrolled .nav-brand img {
+            width: 40px; height: 40px;
+        }
+        .nav-brand span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--white);
+        }
+        .nav-brand span em {
+            font-style: normal;
+            color: var(--white);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 8px 18px;
+            border-radius: 25px;
+            transition: var(--transition);
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--white);
+            background: rgba(255,255,255,0.15);
+        }
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-phone {
+            color: var(--white);
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .nav-phone i { margin-right: 6px; }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .hamburger span {
+            width: 28px; height: 3px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            z-index: -2;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                linear-gradient(135deg, rgba(13,27,42,0.92) 0%, rgba(26,58,92,0.85) 50%, rgba(13,27,42,0.9) 100%);
+            z-index: 1;
+        }
+        .hero-bg-image {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        /* Geometric decorations */
+        .hero .geo-shape {
+            position: absolute;
+            border: 2px solid rgba(255,255,255,0.12);
+            z-index: -1;
+        }
+        .hero .geo-1 {
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            top: -100px; right: -50px;
+            animation: float 8s ease-in-out infinite;
+        }
+        .hero .geo-2 {
+            width: 200px; height: 200px;
+            bottom: 10%; left: -60px;
+            transform: rotate(45deg);
+            animation: float 6s ease-in-out infinite reverse;
+        }
+        .hero .geo-3 {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            top: 30%; right: 15%;
+            border-color: rgba(255,255,255,0.08);
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+        }
+        .hero-content .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.6rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        .hero-content h1 span {
+            color: var(--white);
+            position: relative;
+        }
+        .hero-content h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 2px; left: 0; right: 0;
+            height: 4px;
+            background: var(--white);
+            opacity: 0.3;
+            border-radius: 2px;
+        }
+        .hero-content p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1.15rem;
+            margin-bottom: 35px;
+            max-width: 550px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Stats Bar */
+        .hero-stats {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(13,27,42,0.85);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            z-index: 2;
+        }
+        .hero-stats .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .stat-item {
+            padding: 30px;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition);
+        }
+        .stat-item:last-child { border: none; }
+        .stat-item:hover { background: rgba(255,255,255,0.05); }
+        .stat-item .number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+            line-height: 1;
+        }
+        .stat-item .number span { font-size: 1.5rem; }
+        .stat-item .label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ========== ABOUT ========== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-images {
+            position: relative;
+        }
+        .about-img-main {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .about-img-main img {
+            width: 100%; height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        .about-img-float {
+            position: absolute;
+            bottom: -30px; right: -30px;
+            width: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            border: 5px solid var(--white);
+        }
+        .about-img-float img {
+            width: 100%; height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+        .about-experience {
+            position: absolute;
+            top: -20px; left: -20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            padding: 20px 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(26,58,92,0.4);
+        }
+        .about-experience .number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .about-experience .text {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .about-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .about-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: var(--gray-light);
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .about-feature i {
+            color: var(--primary-light);
+            font-size: 1.1rem;
+        }
+
+        /* ========== SERVICES ========== */
+        .services { background: var(--gray-light); }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        .service-icon {
+            width: 80px; height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, rgba(26,58,92,0.08), rgba(42,90,140,0.08));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        .service-card:hover .service-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            transform: rotateY(180deg);
+        }
+        .service-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .service-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ========== PROJECTS ========== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .project-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 350px;
+            cursor: pointer;
+            group: true;
+        }
+        .project-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(13,27,42,0.9) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+            transition: var(--transition);
+        }
+        .project-card:hover .project-overlay {
+            background: linear-gradient(0deg, rgba(13,27,42,0.95) 0%, rgba(13,27,42,0.3) 100%);
+        }
+        .project-category {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 8px;
+        }
+        .project-overlay h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--white);
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+        .project-card:hover .project-overlay h3 {
+            transform: translateY(0);
+        }
+        .project-overlay p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition);
+        }
+        .project-card:hover .project-overlay p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== WHY CHOOSE US ========== */
+        .why-us { background: var(--dark); color: var(--white); position: relative; overflow: hidden; }
+        .why-us::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 500px; height: 500px;
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 50%;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        .why-card {
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: var(--transition);
+        }
+        .why-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+        }
+        .why-card i {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+        .why-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .why-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials { background: var(--gray-light); }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            transition: var(--transition);
+        }
+        .testimonial-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+        .testimonial-card .quote-icon {
+            font-size: 3rem;
+            color: rgba(26,58,92,0.1);
+            position: absolute;
+            top: 20px; right: 25px;
+        }
+        .testimonial-stars {
+            color: var(--primary-light);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        .testimonial-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .testimonial-avatar {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .testimonial-author h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+        .testimonial-author span {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* ========== CTA ========== */
+        .cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .cta-content {
+            position: relative;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .cta-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+        .cta-content p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        .cta-actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+
+        /* ========== CONTACT ========== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        .contact-info-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact-info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 25px;
+            background: var(--gray-light);
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+        .contact-info-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+        .contact-info-card .icon {
+            width: 55px; height: 55px;
+            min-width: 55px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.3rem;
+        }
+        .contact-info-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        .contact-info-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        .contact-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+        .contact-form h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            outline: none;
+            background: var(--gray-light);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(26,58,92,0.08);
+        }
+        .form-group textarea { height: 120px; resize: vertical; }
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26,58,92,0.3);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.7);
+            padding: 70px 0 0;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .footer-brand img {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+        .footer-social a {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+        .footer h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            color: var(--white);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-links a::before {
+            content: '→';
+            color: rgba(255,255,255,0.4);
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        .footer-links a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+        .footer-bottom {
+            padding: 25px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .footer-bottom span { color: var(--white); font-weight: 600; }
+
+        /* ========== SCROLL TO TOP ========== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--white);
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(26,58,92,0.4);
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .scroll-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* ========== ANIMATIONS ON SCROLL ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== MOBILE RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-stats .container { grid-template-columns: repeat(2, 1fr); }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 0; right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 80px 30px 30px;
+                transition: var(--transition);
+                z-index: 998;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { padding: 12px 0; }
+            .nav-cta .nav-phone { display: none; }
+            .nav-overlay {
+                display: none;
+                position: fixed; inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 997;
+            }
+            .nav-overlay.active { display: block; }
+
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-stats .container { grid-template-columns: repeat(2, 1fr); }
+            .stat-item { padding: 20px 15px; }
+            .stat-item .number { font-size: 2rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
+            .about-images { max-width: 500px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 2rem; }
+            .cta-content h2 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-stats .container { grid-template-columns: 1fr 1fr; }
+            .about-features { grid-template-columns: 1fr; }
+            .section-header .label::before,
+            .section-header .label::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#home" class="nav-brand">
+                <img src="logo.jpg" alt="Phương Thành An Logo">
+                <span>PHƯƠNG THÀNH AN</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Trang chủ</a></li>
+                <li><a href="#about">Giới thiệu</a></li>
+                <li><a href="#services">Dịch vụ</a></li>
+                <li><a href="#projects">Dự án</a></li>
+                <li><a href="#testimonials">Đánh giá</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="tel:0901234567" class="nav-phone">
+                    <i class="fas fa-phone"></i> 090 123 4567
+                </a>
+                <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <img class="hero-bg-image" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=80" alt="Construction Site"
+                 onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 50%, #0d1b2a 100%)';">
+        </div>
+        <div class="geo-shape geo-1"></div>
+        <div class="geo-shape geo-2"></div>
+        <div class="geo-shape geo-3"></div>
+
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">
+                    <i class="fas fa-hard-hat"></i>
+                    Công Ty Xây Dựng Uy Tín Hàng Đầu
+                </div>
+                <h1>Kiến Tạo Công Trình<br><span>Vững Bền Tương Lai</span></h1>
+                <p>Phương Thành An - Đối tác tin cậy trong mọi công trình xây dựng. Chúng tôi mang đến giải pháp xây dựng toàn diện với chất lượng vượt trội và tiến độ cam kết.</p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary"><i class="fas fa-eye" style="margin-right:8px"></i>Xem Dự Án</a>
+                    <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Liên Hệ Ngay</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-stats">
+            <div class="container">
+                <div class="stat-item">
+                    <div class="number" data-count="15">0<span>+</span></div>
+                    <div class="label">Năm Kinh Nghiệm</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" data-count="350">0<span>+</span></div>
+                    <div class="label">Dự Án Hoàn Thành</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" data-count="120">0<span>+</span></div>
+                    <div class="label">Đội Ngũ Chuyên Gia</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" data-count="98">0<span>%</span></div>
+                    <div class="label">Khách Hàng Hài Lòng</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="section-padding" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-images reveal">
+                    <div class="about-experience">
+                        <div class="number">15</div>
+                        <div class="text">Năm<br>Kinh Nghiệm</div>
+                    </div>
+                    <div class="about-img-main">
+                        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80" alt="Công trình xây dựng"
+                             onerror="this.parentElement.style.background='linear-gradient(135deg, #1a3a5c, #2a5a8c)'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-building\' style=\'font-size:4rem;color:rgba(255,255,255,0.3)\'></i>';">
+                    </div>
+                    <div class="about-img-float">
+                        <img src="https://images.unsplash.com/photo-1587582423116-ec07293f0395?w=400&q=80" alt="Đội ngũ kỹ sư"
+                             onerror="this.parentElement.style.background='var(--primary-light)'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-users\' style=\'font-size:2rem;color:var(--white)\'></i>';">
+                    </div>
+                </div>
+                <div class="about-content reveal">
+                    <div class="section-header" style="text-align:left; margin-bottom:20px;">
+                        <div class="label" style="margin-left:0;">
+                            VỀ CHÚNG TÔI
+                        </div>
+                        <h2>Phương Thành An<br>Co., Ltd</h2>
+                    </div>
+                    <h3>Xây dựng niềm tin - Kiến tạo giá trị</h3>
+                    <p>Công ty TNHH Xây Dựng Phương Thành An (PTA) được thành lập với sứ mệnh mang đến những công trình chất lượng cao, đáp ứng mọi nhu cầu xây dựng từ dân dụng đến công nghiệp.</p>
+                    <p>Với đội ngũ kỹ sư, kiến trúc sư giàu kinh nghiệm cùng trang thiết bị hiện đại, chúng tôi cam kết hoàn thành mọi dự án đúng tiến độ và vượt kỳ vọng của khách hàng.</p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <i class="fas fa-check-circle"></i> Đúng tiến độ
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-check-circle"></i> Chất lượng cao
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-check-circle"></i> Giá cạnh tranh
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-check-circle"></i> Bảo hành dài hạn
+                        </div>
+                    </div>
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-arrow-right" style="margin-right:8px"></i>Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services section-padding" id="services">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <div class="label">DỊCH VỤ CỦA CHÚNG TÔI</div>
+                <h2>Giải Pháp Xây Dựng Toàn Diện</h2>
+                <p>Chúng tôi cung cấp đa dạng dịch vụ xây dựng chuyên nghiệp, đáp ứng mọi nhu cầu của khách hàng</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Xây Dựng Nhà Ở</h3>
+                    <p>Thiết kế và xây dựng nhà phố, biệt thự cao cấp theo phong cách hiện đại với vật liệu chất lượng cao.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Công Trình Thương Mại</h3>
+                    <p>Thi công văn phòng, trung tâm thương mại, khách sạn và các công trình thương mại quy mô lớn.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Xây Dựng Công Nghiệp</h3>
+                    <p>Xây dựng nhà xưởng, kho bãi, nhà máy sản xuất với tiêu chuẩn kỹ thuật nghiêm ngặt.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <h3>Thiết Kế Kiến Trúc</h3>
+                    <p>Dịch vụ thiết kế kiến trúc sáng tạo, tối ưu không gian và phù hợp với ngân sách đầu tư.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Sửa Chữa & Cải Tạo</h3>
+                    <p>Dịch vụ sửa chữa, nâng cấp và cải tạo công trình hiện hữu với chi phí tối ưu.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h3>Hạ Tầng & Giao Thông</h3>
+                    <p>Thi công đường giao thông, cầu đường, hệ thống thoát nước và hạ tầng kỹ thuật.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section-padding" id="projects">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <div class="label">DỰ ÁN TIÊU BIỂU</div>
+                <h2>Công Trình Nổi Bật</h2>
+                <p>Những dự án thể hiện năng lực và uy tín của Phương Thành An qua từng công trình</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card reveal">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="Cao ốc văn phòng"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #1a3a5c, #2a5a8c)';">
+                    <div class="project-overlay">
+                        <div class="project-category">Thương mại</div>
+                        <h3>Cao Ốc PTA Tower</h3>
+                        <p>Tòa nhà văn phòng 25 tầng tại trung tâm TP. Hồ Chí Minh</p>
+                    </div>
+                </div>
+                <div class="project-card reveal">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Biệt thự"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a5a8c, #1a3a5c)';">
+                    <div class="project-overlay">
+                        <div class="project-category">Dân dụng</div>
+                        <h3>Khu Biệt Thự Phương An</h3>
+                        <p>Khu biệt thự cao cấp với 50 căn tại Quận 2</p>
+                    </div>
+                </div>
+                <div class="project-card reveal">
+                    <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&q=80" alt="Nhà máy"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #0d1b2a, #1a3a5c)';">
+                    <div class="project-overlay">
+                        <div class="project-category">Công nghiệp</div>
+                        <h3>Nhà Máy Sản Xuất ABC</h3>
+                        <p>Nhà xưởng sản xuất diện tích 10.000m² tại KCN Bình Dương</p>
+                    </div>
+                </div>
+                <div class="project-card reveal">
+                    <img src="https://images.unsplash.com/photo-1582407947092-1990bfff15ff?w=600&q=80" alt="Chung cư"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #1a3a5c, #0d1b2a)';">
+                    <div class="project-overlay">
+                        <div class="project-category">Chung cư</div>
+                        <h3>Chung Cư Thành An Park</h3>
+                        <p>Khu chung cư cao cấp 30 tầng với 500 căn hộ</p>
+                    </div>
+                </div>
+                <div class="project-card reveal">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Resort"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a5a8c, #0d1b2a)';">
+                    <div class="project-overlay">
+                        <div class="project-category">Nghỉ dưỡng</div>
+                        <h3>Resort PTA Beach</h3>
+                        <p>Khu nghỉ dưỡng 5 sao tại Phú Quốc</p>
+                    </div>
+                </div>
+                <div class="project-card reveal">
+                    <img src="https://images.unsplash.com/photo-1611348586804-61bf6c080437?w=600&q=80" alt="Cầu đường"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #0d1b2a, #2a5a8c)';">
+                    <div class="project-overlay">
+                        <div class="project-category">Hạ tầng</div>
+                        <h3>Dự Án Đường Cao Tốc</h3>
+                        <p>Thi công 15km đường cao tốc Bắc - Nam</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us section-padding">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <div class="label" style="color: rgba(255,255,255,0.7);">TẠI SAO CHỌN CHÚNG TÔI</div>
+                <h2 style="color: var(--white);">Giá Trị Cốt Lõi Của PTA</h2>
+                <p style="color: rgba(255,255,255,0.6);">Những cam kết vững chắc tạo nên thương hiệu Phương Thành An</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card reveal">
+                    <i class="fas fa-award"></i>
+                    <h3>Chất Lượng Hàng Đầu</h3>
+                    <p>Sử dụng vật liệu cao cấp, quy trình quản lý chất lượng nghiêm ngặt theo tiêu chuẩn ISO</p>
+                </div>
+                <div class="why-card reveal">
+                    <i class="fas fa-clock"></i>
+                    <h3>Đúng Tiến Độ</h3>
+                    <p>Cam kết bàn giao công trình đúng hoặc sớm hơn thời gian đã thỏa thuận trong hợp đồng</p>
+                </div>
+                <div class="why-card reveal">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Giá Cả Hợp Lý</h3>
+                    <p>Báo giá minh bạch, không phát sinh chi phí ẩn, tối ưu ngân sách cho khách hàng</p>
+                </div>
+                <div class="why-card reveal">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Bảo Hành Toàn Diện</h3>
+                    <p>Chính sách bảo hành dài hạn lên đến 5 năm, hỗ trợ bảo trì định kỳ miễn phí</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials section-padding" id="testimonials">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <div class="label">ĐÁNH GIÁ KHÁCH HÀNG</div>
+                <h2>Khách Hàng Nói Gì Về Chúng Tôi</h2>
+                <p>Sự hài lòng của khách hàng là thước đo thành công của chúng tôi</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"Phương Thành An đã xây dựng ngôi nhà mơ ước cho gia đình tôi. Từ thiết kế đến thi công đều rất chuyên nghiệp và tỉ mỉ. Hoàn toàn hài lòng!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">NT</div>
+                        <div>
+                            <h4>Nguyễn Thành Trung</h4>
+                            <span>Chủ nhà - Quận 7, TP.HCM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"Chúng tôi đã hợp tác với PTA trong dự án nhà máy và rất ấn tượng với năng lực kỹ thuật cũng như tinh thần trách nhiệm của đội ngũ."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">LH</div>
+                        <div>
+                            <h4>Lê Hoàng Anh</h4>
+                            <span>Giám đốc - Công ty ABC</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"Giá cả hợp lý, chất lượng tuyệt vời. Đặc biệt ấn tượng với chế độ bảo hành sau bàn giao. Chắc chắn sẽ tiếp tục hợp tác."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">PL</div>
+                        <div>
+                            <h4>Phạm Lan Hương</h4>
+                            <span>Nhà đầu tư BĐS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta section-padding">
+        <div class="container">
+            <div class="cta-content reveal">
+                <h2>Bạn Có Dự Án Cần Thi Công?</h2>
+                <p>Liên hệ với Phương Thành An ngay hôm nay để được tư vấn miễn phí và nhận báo giá tốt nhất cho dự án của bạn.</p>
+                <div class="cta-actions">
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane" style="margin-right:8px"></i>Nhận Báo Giá Miễn Phí</a>
+                    <a href="tel:0901234567" class="btn btn-outline"><i class="fas fa-phone" style="margin-right:8px"></i>Gọi Ngay: 090 123 4567</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section-padding" id="contact">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <div class="label">LIÊN HỆ VỚI CHÚNG TÔI</div>
+                <h2>Kết Nối Với PTA</h2>
+                <p>Hãy để lại thông tin, chúng tôi sẽ liên hệ tư vấn miễn phí cho bạn</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info-cards reveal">
+                    <div class="contact-info-card">
+                        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Địa chỉ văn phòng</h4>
+                            <p>123 Đường Nguyễn Văn Linh, Quận 7<br>TP. Hồ Chí Minh, Việt Nam</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                        <div>
+                            <h4>Hotline tư vấn</h4>
+                            <p>090 123 4567<br>028 1234 5678</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email liên hệ</h4>
+                            <p>info@phuongthanhan.vn<br>contact@pta-construction.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-card">
+                        <div class="icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>Giờ làm việc</h4>
+                            <p>Thứ 2 - Thứ 7: 7:30 - 17:30<br>Chủ nhật: Nghỉ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form reveal">
+                    <h3><i class="fas fa-edit" style="margin-right:10px; color:var(--primary-light)"></i>Gửi yêu cầu tư vấn</h3>
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" placeholder="Họ và tên *" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" placeholder="Số điện thoại *" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Địa chỉ email">
+                        </div>
+                        <div class="form-group">
+                            <select>
+                                <option value="">— Chọn dịch vụ quan tâm —</option>
+                                <option>Xây dựng nhà ở</option>
+                                <option>Công trình thương mại</option>
+                                <option>Xây dựng công nghiệp</option>
+                                <option>Thiết kế kiến trúc</option>
+                                <option>Sửa chữa & cải tạo</option>
+                                <option>Hạ tầng & giao thông</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Mô tả yêu cầu của bạn..."></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">
+                            <i class="fas fa-paper-plane" style="margin-right:8px"></i>Gửi Yêu Cầu Tư Vấn
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="logo.jpg" alt="Phương Thành An Logo">
+                    <p>Công ty TNHH Xây Dựng Phương Thành An (PTA) - Đối tác tin cậy trong mọi công trình xây dựng. Chất lượng là nền tảng, uy tín là thương hiệu.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fas fa-globe"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Dịch Vụ</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Xây dựng nhà ở</a></li>
+                        <li><a href="#">Công trình thương mại</a></li>
+                        <li><a href="#">Xây dựng công nghiệp</a></li>
+                        <li><a href="#">Thiết kế kiến trúc</a></li>
+                        <li><a href="#">Sửa chữa & cải tạo</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Liên Kết Nhanh</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Trang chủ</a></li>
+                        <li><a href="#about">Giới thiệu</a></li>
+                        <li><a href="#projects">Dự án</a></li>
+                        <li><a href="#testimonials">Đánh giá</a></li>
+                        <li><a href="#contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Liên Hệ</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">123 Nguyễn Văn Linh, Q7</a></li>
+                        <li><a href="tel:0901234567">090 123 4567</a></li>
+                        <li><a href="mailto:info@phuongthanhan.vn">info@phuongthanhan.vn</a></li>
+                        <li><a href="#">Thứ 2 - Thứ 7</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2024 <span>Phương Thành An Co., Ltd.</span> Tất cả quyền được bảo lưu.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 800);
+            animateCounters();
+        });
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        const scrollTopBtn = document.getElementById('scrollTop');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            navbar.classList.toggle('scrolled', scrollY > 80);
+            scrollTopBtn.classList.toggle('visible', scrollY > 500);
+
+            // Active nav link
+            const sections = document.querySelectorAll('section[id]');
+            sections.forEach(section => {
+                const top = section.offsetTop - 120;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+                const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+                if (link) {
+                    link.classList.toggle('active', scrollY >= top && scrollY < top + height);
+                }
+            });
+        });
+
+        // ===== MOBILE MENU =====
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+            document.getElementById('navOverlay').classList.toggle('active');
+        }
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+                document.getElementById('navOverlay').classList.remove('active');
+            });
+        });
+
+        // ===== SCROLL TO TOP =====
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== COUNTER ANIMATION =====
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-item .number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const suffix = counter.querySelector('span')?.textContent || '';
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const update = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.innerHTML = Math.floor(current) + `<span>${suffix}</span>`;
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.innerHTML = target + `<span>${suffix}</span>`;
+                    }
+                };
+                update();
+            });
+        }
+
+        // ===== SCROLL REVEAL =====
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ===== FORM SUBMIT =====
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.form-submit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check" style="margin-right:8px"></i>Đã gửi thành công!';
+            btn.style.background = '#28a745';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
